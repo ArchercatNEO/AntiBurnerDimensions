@@ -1,5 +1,5 @@
 <script>
-import BreakInfinityButton from "./BreakInfinityButton";
+import BreakInfinityButton from "./BreakInfinityButton.vue";
 import InfinityUpgradeButton from "@/components/InfinityUpgradeButton";
 
 export default {

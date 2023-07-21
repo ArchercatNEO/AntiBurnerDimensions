@@ -120,6 +120,10 @@ export default {
   width: 0.5rem;
 }
 
+.o-tab-btn--matrix::before {
+  background-color: var(--color-matrix);
+}
+
 .o-tab-btn--infinity::before {
   background-color: var(--color-infinity);
 }

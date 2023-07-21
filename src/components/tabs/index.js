@@ -25,6 +25,7 @@ import NormalChallengesTab from "./normal-challenges/NormalChallengesTab";
 import OptionsGameplayTab from "./options-gameplay/OptionsGameplayTab";
 import OptionsSavingTab from "./options-saving/OptionsSavingTab";
 import OptionsVisualTab from "./options-visual/OptionsVisualTab";
+import OverflowTab from "./overflow/OverflowTab";
 import PastPrestigeRunsTab from "./past-prestige-runs/PastPrestigeRunsTab";
 import PelleTab from "./celestial-pelle/PelleTab";
 import PerksTab from "./perks/PerksTab";
@@ -46,6 +47,7 @@ const TabComponents = {
   AntimatterDimensionsTab,
   InfinityDimensionsTab,
   TimeDimensionsTab,
+  OverflowTab,
   OptionsSavingTab,
   OptionsVisualTab,
   OptionsGameplayTab,

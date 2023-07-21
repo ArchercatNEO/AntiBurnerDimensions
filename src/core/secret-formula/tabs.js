@@ -496,5 +496,23 @@ export const tabs = [
         hidable: true
       }
     ]
+  },
+  {
+    key: "overflow",
+    name: "Overflow",
+    UIClass: "o-tab-btn--matrix",
+    hideAt: 1.5,
+    id: 11,
+    hidable: true,
+    subtabs: [
+      {
+        key: "overflow",
+        name: "Overflow",
+        symbol: "ε",
+        component: "OverflowTab",
+        id: 0,
+        hidable: true
+      }
+    ]
   }
 ];

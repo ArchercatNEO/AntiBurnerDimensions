@@ -74,6 +74,7 @@ html {
   --color-notification: red;
   --color-overlay: rgba(30, 30, 50, 70%);
 
+  --color-matrix: #0000FF;
   --color-antimatter: #2196f3;
   --color-infinity: #b67f33;
   --color-eternity: #b341e0;
@@ -752,6 +753,16 @@ button:focus {
 
 .o-tab-btn--celestial:hover {
   background: var(--color-celestials);
+}
+
+.o-tab-btn--matrix {
+  color: var(--color-matrix);
+  background-color: var(--color-prestige--accent);
+  border-color: var(--color-matrix);
+}
+
+.o-tab-btn--matrix:hover {
+  background: var(--color-matrix);
 }
 
 /* #endregion tab buttons */
