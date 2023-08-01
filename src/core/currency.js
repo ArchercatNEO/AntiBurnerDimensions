@@ -477,3 +477,8 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
     player.celestials.pelle.galaxyGenerator.spentGalaxies += spent;
   }
 }();
+
+Currency.overflowPoints = new class extends DecimalCurrency {
+  get value() { return player.overflowPoints; }
+  set value(value) { player.overflowPoints = value; }
+}();

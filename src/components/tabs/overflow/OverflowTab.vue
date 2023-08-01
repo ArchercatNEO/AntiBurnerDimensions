@@ -1,71 +1,77 @@
 <script>
+import { Currency } from "../../../core/currency";
 
-import InfinityUpgradeButton from "@/components/InfinityUpgradeButton";
+import { OverflowUpgrade } from "../../../core/overflow";
+
+import OverflowUpgradeButton from "./../overflow/OverflowUpgradeButton";
+
 
 export default {
-    name: "OverflowTab",
-    components: {
-        InfinityUpgradeButton
-    },
-    
-    data() {
-        return {isUnlocked: true}
-    },
-
-    computed: {
-        grid() {
-            return [
+  name: "OverflowTab",
+  components: {
+    OverflowUpgradeButton,
+  },
+  data() {
+    return {
+      amount: new Decimal()
+    };
+  },
+  computed: {
+    grid() {
+      return [
         [
-          InfinityUpgrade.totalTimeMult,
-          InfinityUpgrade.dim18mult,
-          InfinityUpgrade.dim36mult,
-          InfinityUpgrade.resetBoost
+          OverflowUpgrade.epMult
         ],
         [
-          InfinityUpgrade.buy10Mult,
-          InfinityUpgrade.dim27mult,
-          InfinityUpgrade.dim45mult,
-          InfinityUpgrade.galaxyBoost
-        ],
-        [
-          InfinityUpgrade.thisInfinityTimeMult,
-          InfinityUpgrade.unspentIPMult,
-          InfinityUpgrade.dimboostMult,
-          InfinityUpgrade.ipGen
-        ],
-        [
-          InfinityUpgrade.skipReset1,
-          InfinityUpgrade.skipReset2,
-          InfinityUpgrade.skipReset3,
-          InfinityUpgrade.skipResetGalaxy
+          OverflowUpgrade.nt
         ]
       ];
-        },
     },
-
-    methods: {
-        
-        update() {this.isUnlocked = Autobuyer.bigCrunch.hasMaxedInterval;},
-        
-        btnClassObject(column) {
-            return {
-                "l-infinity-upgrade-grid__cell": true,
-                "o-infinity-upgrade-btn--multiplier": column === 3
-            };
-        },
-        
-        timeDisplayShort: (time) =>  timeDisplayShort(time)
-
-        
+    costIncreases: () => EternityUpgrade.epMult.costIncreaseThresholds.map(x => new Decimal(x))
+  },
+  methods: {
+    formatPostBreak,
+    update() {
+      this.amount.copyFrom(Currency.overflowPoints);
+    }
   }
-
 };
 </script>
 
 <template>
-
+  <div class="l-eternity-upgrades-grid">
+    <div
+      v-for="(row, i) in grid"
+      :key="i"
+      class="l-eternity-upgrades-grid__row"
+    >
+      <OverflowUpgradeButton
+        v-for="upgrade in row"
+        :key="upgrade.id"
+        :upgrade="upgrade"
+        class="l-eternity-upgrades-grid__cell"
+      />
+    </div>
+    <div>
+      You have {{ formatPostBreak(amount) }} Overflow Points.
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.l-eternity-upgrades-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
 
+.l-eternity-upgrades-grid__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.l-eternity-upgrades-grid__cell {
+  margin: 0.5rem 0.8rem;
+}
 </style>

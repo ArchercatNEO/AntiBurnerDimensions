@@ -512,6 +512,14 @@ export const tabs = [
         component: "OverflowTab",
         id: 0,
         hidable: true
+      },
+      {
+        key: "negative",
+        name: "Capacitator",
+        symbol: "ε",
+        component: "OverflowTab",
+        id: 1,
+        hidable: true
       }
     ]
   }

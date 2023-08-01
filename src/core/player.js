@@ -200,6 +200,8 @@ window.player = {
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
   },
+  overflowPoints: DC.D0,
+  overflowUpgrades: new Set(),
   infinityPoints: DC.D0,
   infinities: DC.D0,
   infinitiesBanked: DC.D0,
