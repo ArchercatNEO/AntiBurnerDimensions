@@ -9313,3 +9313,50 @@ input.o-automator-block-input {
   width: 100%;
   height: 100%;
 }
+
+/* #region Overflow Upgrades */
+.o-overflow-upgrade {
+  width: 20rem;
+  height: 9rem;
+  font-family: Typewriter, serif;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 0.1rem solid var(--color-matrix);
+  border-radius: var(--var-border-radius, 0.4rem);
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+
+.o-overflow-upgrade--useless {
+  color: black;
+  background-color: var(--color-pelle--base);
+  border-color: black;
+  filter: grayscale(50%);
+}
+
+.o-overflow-upgrade--available {
+  color: var(--color-matrix);
+  background-color: black;
+}
+
+.o-overflow-upgrade--available:hover {
+  color: var(--color-text);
+  background-color: var(--color-matrix);
+}
+
+.o-overflow-upgrade--unavailable {
+  color: #181818;
+  background-color: #5f5f5f;
+  cursor: default;
+}
+
+.o-overflow-upgrade--unavailable:hover {
+  background-color: #737373;
+}
+
+.o-overflow-upgrade--maxed {
+  color: black;
+  background-color: var(--color-matrix);
+  border-color: black;
+  cursor: default;
+}

@@ -348,9 +348,11 @@ class AntimatterDimensionState extends DimensionState {
    * @returns {ExponentialCostScaling}
    */
   get costScale() {
+    const base = NormalChallenge(6).isRunning ? this._c6BaseCost : this._baseCost;
+    const exp = NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier;
     return new ExponentialCostScaling({
-      baseCost: NormalChallenge(6).isRunning ? this._c6BaseCost : this._baseCost,
-      baseIncrease: NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier,
+      baseCost: base / Player.antimatterAntiBase[this.tier],
+      baseIncrease: exp / Player.antimatterAntiScaling[this.tier],
       costScale: Player.dimensionMultDecrease,
       scalingCostThreshold: Number.MAX_VALUE
     });

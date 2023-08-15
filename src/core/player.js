@@ -6,6 +6,7 @@ import { DC } from "./constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
 
+
 // This is actually reassigned when importing saves
 // eslint-disable-next-line prefer-const
 window.player = {
@@ -29,12 +30,14 @@ window.player = {
       bought: 0
     }))
   },
+  antimatterAntiScaling: [null, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e12],
   buyUntil10: true,
   sacrificed: DC.D0,
   achievementBits: Array.repeat(0, 17),
   secretAchievementBits: Array.repeat(0, 4),
   infinityUpgrades: new Set(),
   infinityRebuyables: [0, 0, 0],
+  overflowRebuyables: Array(17).fill(0),
   challenge: {
     normal: {
       current: 0,
@@ -916,6 +919,7 @@ window.player = {
   },
 };
 
+
 export const Player = {
   defaultStart: deepmergeAll([{}, player]),
 
@@ -964,6 +968,14 @@ export const Player = {
 
   get dimensionMultDecrease() {
     return GameCache.dimensionMultDecrease.value;
+  },
+
+  get antimatterAntiBase() {
+    return GameCache.antimatterAntiBase.value;
+  },
+
+  get antimatterAntiScaling() {
+    return GameCache.antimatterAntiScaling.value;
   },
 
   get infinityGoal() {
@@ -1071,6 +1083,7 @@ export function guardFromNaNValues(obj) {
         enumerable: true,
         configurable: true,
         get: () => value,
+        // eslint-disable-next-line no-loop-func
         set: function guardedSetter(newValue) {
           if (newValue === null || newValue === undefined) {
             throw new Error("null/undefined player property assignment");

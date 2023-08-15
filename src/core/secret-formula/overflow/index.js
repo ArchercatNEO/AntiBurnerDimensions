@@ -1,5 +1,6 @@
-import { overflowUpgrades } from "./overflow-upgrades";
+import { overflowBaseUpgrades, overflowScalingUpgrades } from "./overflow-upgrades";
 
 export const overflow = {
-  upgrades: overflowUpgrades
+  base: overflowBaseUpgrades,
+  scaling: overflowScalingUpgrades,
 };

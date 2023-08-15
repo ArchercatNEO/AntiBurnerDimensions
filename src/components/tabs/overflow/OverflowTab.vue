@@ -1,8 +1,6 @@
 <script>
 import { Currency } from "../../../core/currency";
 
-import { OverflowUpgrade } from "../../../core/overflow";
-
 import OverflowUpgradeButton from "./../overflow/OverflowUpgradeButton";
 
 
@@ -10,7 +8,7 @@ export default {
   name: "OverflowTab",
   components: {
     OverflowUpgradeButton,
-  },
+},
   data() {
     return {
       amount: new Decimal()
@@ -20,10 +18,28 @@ export default {
     grid() {
       return [
         [
-          OverflowUpgrade.epMult
+          OverflowBaseUpgrade.dim1AntiBase,
+          OverflowBaseUpgrade.dim2AntiBase,
+          OverflowBaseUpgrade.dim3AntiBase,
+          OverflowBaseUpgrade.dim4AntiBase,
         ],
         [
-          OverflowUpgrade.nt
+          OverflowBaseUpgrade.dim5AntiBase,
+          OverflowBaseUpgrade.dim6AntiBase,
+          OverflowBaseUpgrade.dim7AntiBase,
+          OverflowBaseUpgrade.dim8AntiBase,
+        ],
+        [
+          OverflowScalingUpgrade.dim1AntiScaling,
+          OverflowScalingUpgrade.dim2AntiScaling,
+          OverflowScalingUpgrade.dim3AntiScaling,
+          OverflowScalingUpgrade.dim4AntiScaling,
+        ],
+        [
+          OverflowScalingUpgrade.dim5AntiScaling,
+          OverflowScalingUpgrade.dim6AntiScaling,
+          OverflowScalingUpgrade.dim7AntiScaling,
+          OverflowScalingUpgrade.dim8AntiScaling,
         ]
       ];
     },

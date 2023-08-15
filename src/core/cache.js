@@ -1,5 +1,8 @@
+import { OverflowScalingUpgrade } from "./overflow";
+
 class Lazy {
   constructor(getValue) {
+    this._value = undefined;
     this._getValue = getValue;
     Lazy.registerLazy(this);
   }
@@ -67,8 +70,22 @@ export const GameCache = {
     EternityChallenge(6).reward
   )),
 
+  antimatterAntiBase: new Lazy(() => {
+      const all = OverflowBaseUpgrade.all.map(e => e.effectValue);
+      all.unshift(null);
+      return all;
+  }),
+
+  antimatterAntiScaling: new Lazy(() => {
+    const all = OverflowScalingUpgrade.all.map(e => e.effectValue);
+    all.unshift(null);
+    return all;
+}),
+
+
   timeStudies: new Lazy(() => NormalTimeStudyState.studies
-    .map(s => player.timestudy.studies.includes(s.id))),
+    .map(s => player.timestudy.studies.includes(s.id))
+  ),
 
   currentStudyTree: new Lazy(() => new TimeStudyTree(TimeStudyTree.currentStudies)),
 

@@ -18,27 +18,24 @@ export default {
   },
   data() {
     return {
-      isBought: false,
-      isAffordable: false
+      isMaxed: false,
+      isAffordable: false,
     };
   },
   computed: {
     classObject() {
       return {
-        "o-eternity-upgrade": true,
-        "o-eternity-upgrade--bought": this.isBought,
-        "o-eternity-upgrade--available": !this.isBought && this.isAffordable,
-        "o-eternity-upgrade--unavailable": !this.isBought && !this.isAffordable
+        "o-overflow-upgrade": true,
+        "o-overflow-upgrade--maxed": this.isMaxed,
+        "o-overflow-upgrade--available": !this.isMaxed && this.isAffordable,
+        "o-overflow-upgrade--unavailable": !this.isMaxed && !this.isAffordable
       };
     },
-    hasEU2() {
-      return Perk.autounlockEU2.canBeApplied;
-    }
   },
   methods: {
     update() {
       const upgrade = this.upgrade;
-      this.isBought = upgrade.isBought;
+      this.isMaxed = upgrade.isMaxed;
       this.isAffordable = upgrade.isAffordable;
     }
   }
@@ -55,11 +52,8 @@ export default {
       br
       :config="upgrade.config"
     />
-    <div v-if="!isBought && hasEU2">
-      Auto: {{ format(upgrade.config.cost / 1e10) }} Eternity Points
-    </div>
     <CostDisplay
-      v-else-if="!isBought"
+      v-if="!isMaxed"
       br
       :config="upgrade.config"
       name="Overflow Point"
