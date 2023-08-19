@@ -185,6 +185,7 @@ function onBuyDimension(tier) {
 
   if (player.speedrun.isActive && !player.speedrun.hasStarted) Speedrun.startTimer();
 
+  if (Simulation(1).isRunning) player.sim1Pow = 0;
   if (NormalChallenge(2).isRunning) player.chall2Pow = 0;
   if (NormalChallenge(4).isRunning || InfinityChallenge(1).isRunning) {
     AntimatterDimensions.resetAmountUpToTier(tier - 1);
@@ -232,6 +233,7 @@ export function buyManyDimension(tier) {
   if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
+  if (Simulation(2).isRunning) player.sim2Pow++;
   dimension.challengeCostBump();
   dimension.amount = dimension.amount.plus(dimension.remainingUntil10);
   dimension.bought += dimension.remainingUntil10;
@@ -250,6 +252,7 @@ export function buyAsManyAsYouCanBuy(tier) {
   if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
+  if (Simulation(2).isRunning) player.sim2Pow++;
   dimension.challengeCostBump();
   dimension.amount = dimension.amount.plus(howMany);
   dimension.bought += howMany;
@@ -262,6 +265,7 @@ export function buyAsManyAsYouCanBuy(tier) {
 // This function doesn't do cost checking as challenges generally modify costs, it just buys and updates dimensions
 function buyUntilTen(tier) {
   if (Laitela.continuumActive) return;
+  if (Simulation(2).isRunning) player.sim2Pow++;
   const dimension = AntimatterDimension(tier);
   dimension.challengeCostBump();
   dimension.amount = Decimal.round(dimension.amount.plus(dimension.remainingUntil10));
@@ -283,6 +287,7 @@ export function maxAll() {
   buyMaxTickSpeed();
 }
 
+// eslint-disable-next-line complexity
 export function buyMaxDimension(tier, bulk = Infinity) {
   const dimension = AntimatterDimension(tier);
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return;
@@ -304,6 +309,18 @@ export function buyMaxDimension(tier, bulk = Infinity) {
   }
 
   if (bulkLeft <= 0) return;
+
+  if (Simulation(2).isRunning) {
+    while (dimension.isAffordableUntil10 && dimension.cost.lt(goal) && bulkLeft > 0) {
+      // We can use dimension.currencyAmount or Currency.antimatter here, they're the same,
+      // but it seems safest to use dimension.currencyAmount for consistency.
+      dimension.currencyAmount = dimension.currencyAmount.minus(dimension.costUntil10);
+      buyUntilTen(tier);
+      bulkLeft--;
+      player.sim2Pow++;
+    }
+    return;
+  }
 
   // Buy in a while loop in order to properly trigger abnormal price increases
   if (NormalChallenge(9).isRunning || InfinityChallenge(5).isRunning) {

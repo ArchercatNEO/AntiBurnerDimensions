@@ -5,6 +5,7 @@ import { AUTOMATOR_MODE, AUTOMATOR_TYPE } from "./automator/automator-backend";
 import { DC } from "./constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
+import { Simulation } from "./simulations";
 
 
 // This is actually reassigned when importing saves
@@ -37,8 +38,11 @@ window.player = {
   secretAchievementBits: Array.repeat(0, 4),
   infinityUpgrades: new Set(),
   infinityRebuyables: [0, 0, 0],
-  overflowRebuyables: Array(17).fill(0),
   challenge: {
+    simulation: {
+      current: 0,
+      completedBits: 0
+    },
     normal: {
       current: 0,
       bestTimes: Array.repeat(Number.MAX_VALUE, 11),
@@ -203,8 +207,9 @@ window.player = {
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
   },
-  overflowPoints: DC.D0,
-  overflowUpgrades: new Set(),
+  entropy: 0,
+  maxEntropy: 0,
+  entropyRebuyables: Array(17).fill(0),
   infinityPoints: DC.D0,
   infinities: DC.D0,
   infinitiesBanked: DC.D0,
@@ -223,6 +228,8 @@ window.player = {
   },
   lastUpdate: new Date().getTime(),
   backupTimer: 0,
+  sim1Pow: 0,
+  sim2Pow: 0,
   chall2Pow: 1,
   chall3Pow: DC.D0_01,
   matter: DC.D1,
@@ -933,6 +940,10 @@ export const Player = {
 
   get antimatterChallenge() {
     return NormalChallenge.current || InfinityChallenge.current;
+  },
+
+  get simulation() {
+    return Simulation.current;
   },
 
   get isInAnyChallenge() {

@@ -2,11 +2,11 @@ import TWEEN from "tween.js";
 
 import { ElectronRuntime, SteamRuntime } from "@/steam";
 
+import { Cloud } from "./core/storage";
 import { DC } from "./core/constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { DEV } from "@/env";
 import { SpeedrunMilestones } from "./core/speedrun";
-import { Cloud } from "./core/storage";
 import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
@@ -476,6 +476,9 @@ export function gameLoop(passDiff, options = {}) {
   if (Achievement(165).isUnlocked && player.celestials.effarig.autoAdjustGlyphWeights) {
     autoAdjustGlyphWeights();
   }
+
+  for (let i = 1; i < Simulations.all.length + 1; i++)
+    Simulation(i).tryFail();
 
   // We do these after autobuyers, since it's possible something there might
   // change a multiplier.

@@ -1,11 +1,13 @@
 <script>
 import FailableEcText from "./FailableEcText";
+import FailableSimText from "./FailableSimText";
 import PrimaryButton from "@/components/PrimaryButton";
 
 export default {
   name: "HeaderChallengeDisplay",
   components: {
     FailableEcText,
+    FailableSimText,
     PrimaryButton
   },
   data() {
@@ -57,6 +59,11 @@ export default {
           isActive: token => token > 0,
           activityToken: () => player.challenge.normal.current
         },
+        {
+          name: token => `Simulation ${token}`,
+          isActive: token => token > 0,
+          activityToken: () => player.challenge.simulation.current
+        },
       ];
     },
     activeChallengeNames() {
@@ -88,6 +95,9 @@ export default {
     },
     isInFailableEC() {
       return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
+    },
+    isInFailableSim() {
+      return this.activeChallengeNames.some(str => str.match(/Simulation/gu));
     },
     challengeDisplay() {
       if (this.inPelle && this.activeChallengeNames.length > 0) {
@@ -173,6 +183,7 @@ export default {
       if (fullName.match(" Challenge$")) Tab.challenges.normal.show(true);
       else if (fullName.match("Infinity Challenge")) Tab.challenges.infinity.show(true);
       else if (fullName.match("Eternity Challenge")) Tab.challenges.eternity.show(true);
+      else if (fullName.match("Simulation")) Tab.challenges.simulation.show(true);
       else if (player.dilation.active) Tab.eternity.dilation.show(true);
       else Tab.celestials[celestial].show(true);
     },
@@ -204,6 +215,7 @@ export default {
       You are currently in {{ challengeDisplay }}
     </span>
     <FailableEcText v-if="isInFailableEC" />
+    <FailableSimText v-if="isInFailableSim" />
     <span class="l-padding-line" />
     <PrimaryButton
       v-if="showExit"

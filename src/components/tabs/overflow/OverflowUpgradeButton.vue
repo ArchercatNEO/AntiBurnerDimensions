@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      isMaxed: false,
+      isCapped: false,
       isAffordable: false,
     };
   },
@@ -26,16 +26,16 @@ export default {
     classObject() {
       return {
         "o-overflow-upgrade": true,
-        "o-overflow-upgrade--maxed": this.isMaxed,
-        "o-overflow-upgrade--available": !this.isMaxed && this.isAffordable,
-        "o-overflow-upgrade--unavailable": !this.isMaxed && !this.isAffordable
+        "o-overflow-upgrade--maxed": this.isCapped,
+        "o-overflow-upgrade--available": !this.isCapped && this.isAffordable,
+        "o-overflow-upgrade--unavailable": !this.isCapped && !this.isAffordable
       };
     },
   },
   methods: {
     update() {
       const upgrade = this.upgrade;
-      this.isMaxed = upgrade.isMaxed;
+      this.isCapped = upgrade.isCapped;
       this.isAffordable = upgrade.isAffordable;
     }
   }
@@ -53,10 +53,10 @@ export default {
       :config="upgrade.config"
     />
     <CostDisplay
-      v-if="!isMaxed"
+      v-if="!isCapped"
       br
       :config="upgrade.config"
-      name="Overflow Point"
+      name="Entropy"
     />
   </button>
 </template>

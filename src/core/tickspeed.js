@@ -78,6 +78,7 @@ export function buyTickSpeed() {
   player.records.thisInfinity.lastBuyTime = player.records.thisInfinity.time;
   player.requirementChecks.permanent.singleTickspeed++;
   if (NormalChallenge(2).isRunning) player.chall2Pow = 0;
+  if (Simulation(1).isRunning) player.sim1Pow = 0;
   GameUI.update();
   return true;
 }

@@ -175,23 +175,39 @@ export class DimBoost {
 
 // eslint-disable-next-line max-params
 export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false, enteringAntimatterChallenge = false) {
+
+  const simulation = Player.simulation;
+  if (simulation !== 0 && simulation !== null && simulation !== undefined) {
+    simulation.complete();
+    player.challenge.simulation.current = 0;
+    bigCrunchReset(true, false);
+    return;
+  }
+
   if (Currency.antimatter.gt(Player.infinityLimit)) return;
+
   const bulk = Math.min(tempBulk, DimBoost.maxBoosts - player.dimensionBoosts);
   EventHub.dispatch(GAME_EVENT.DIMBOOST_BEFORE, bulk);
   player.dimensionBoosts = Math.max(0, player.dimensionBoosts + bulk);
+
   resetChallengeStuff();
+
   const canKeepDimensions = Pelle.isDoomed
     ? PelleUpgrade.dimBoostResetsNothing.canBeApplied
     : Perk.antimatterNoReset.canBeApplied;
-  if (forcedADReset || !canKeepDimensions) {
+
+    if (forcedADReset || !canKeepDimensions) {
     AntimatterDimensions.reset();
     player.sacrificed = DC.D0;
     resetTickspeed();
   }
+
   skipResetsIfPossible(enteringAntimatterChallenge);
+
   const canKeepAntimatter = Pelle.isDoomed
     ? PelleUpgrade.dimBoostResetsNothing.canBeApplied
     : (Achievement(111).isUnlocked || Perk.antimatterNoReset.canBeApplied);
+
   if (!forcedAMReset && canKeepAntimatter) {
     Currency.antimatter.bumpTo(Currency.antimatter.startingValue);
   } else {

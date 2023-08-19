@@ -1,21 +1,22 @@
 function rebuyable(config) {
 
-    const { id, maxUpgrades, description, isDisabled, noLabel, onPurchased } = config;
+    const { id, maxUpgrades, description, isDisabled, noLabel, onPurchased, costX, isBase } = config;
+    const begin = isBase ? "Base is " : "x";
 
     return {
       rebuyable: true,
       id,
-      cost: () => config.initialCost * Math.pow(config.costIncrease, player.overflowRebuyables[config.id]),
+      cost: () => config.initialCost * Math.pow(config.costIncrease, player.entropyRebuyables[config.id]),
       maxUpgrades,
       description,
-      effect: () => 10 ** player.overflowRebuyables[config.id],
+      effect: () => 10 ** player.entropyRebuyables[config.id],
       isDisabled,
       // There isn't enough room in the button to fit the EC reduction and "Next:" at the same time while still
       // presenting all the information in an understandable way, so we only show it if the upgrade is maxed
       formatCost: value => format(value, 2, 0),
       formatEffect: value => (Math.log10(value) === config.maxUpgrades
-      ? `Currently: /${format(value)}`
-      : `Currently: /${format(value)} | Next: /${format(value * 10)}`),
+      ? `Currently: ${begin + format(costX / value)}`
+      : `Currently: ${begin + format(costX / value)} | Next: ${format(costX / (value * 10))}`),
       noLabel,
       onPurchased
     };
@@ -30,9 +31,11 @@ export const overflowScalingUpgrades = {};
 for (let i = 1; i < 9; i++) {
     overflowBaseUpgrades[`dim${i}AntiBase`] = rebuyable({
         id: i,
+        isBase: true,
         maxUpgrades: Math.log10(BASE_COSTS[i]),
         initialCost: 1,
         costIncrease: 1,
+        costX: BASE_COSTS[i],
         description: () => `Divide Dim ${i} base cost by 10x per level`,
         noLabel: true,
         // eslint-disable-next-line no-loop-func
@@ -43,9 +46,11 @@ for (let i = 1; i < 9; i++) {
 for (let i = 1; i < 9; i++) {
     overflowScalingUpgrades[`dim${i}AntiScaling`] = rebuyable({
         id: i + 8,
+        isBase: false,
         maxUpgrades: Math.log10(BASE_COST_MULTIPLIERS[i]) - 1,
         initialCost: 1,
         costIncrease: 1,
+        costX: BASE_COST_MULTIPLIERS[i],
         description: () => `Divide Dim ${i} exponential scaling by 10x per level`,
         noLabel: true,
         // eslint-disable-next-line no-loop-func

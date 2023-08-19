@@ -26,6 +26,10 @@ export function updateNormalAndInfinityChallenges(diff) {
     player.chall2Pow = Math.min(player.chall2Pow + diff / 100 / 1800, 1);
   }
 
+  if (Simulation(1).isRunning) {
+    player.sim1Pow += diff / 1000;
+  }
+
   if (InfinityChallenge(2).isRunning) {
     if (player.ic2Count >= 400) {
       if (AntimatterDimension(8).amount.gt(0)) {

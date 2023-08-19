@@ -1,14 +1,14 @@
 import { RebuyableMechanicState } from "./game-mechanics";
 
 class OverflowUpgradeState extends RebuyableMechanicState {
-  get currency() { return Currency.antimatter; }
+  get currency() { return Currency.entropy; }
 
   get boughtAmount() {
-    return player.overflowRebuyables[this.id];
+    return player.entropyRebuyables[this.id];
   }
 
   set boughtAmount(value) {
-    player.overflowRebuyables[this.id] = value;
+    player.entropyRebuyables[this.id] = value;
   }
 
   get isCapped() {
@@ -25,13 +25,10 @@ export const OverflowBaseUpgrade = mapGameDataToObject(
   config => (new OverflowUpgradeState(config))
 );
 
-
-window.OverflowBaseUpgrade = OverflowBaseUpgrade;
-
 export const OverflowScalingUpgrade = mapGameDataToObject(
   GameDatabase.overflow.scaling,
   config => (new OverflowUpgradeState(config))
-);
+  );
 
-
+window.OverflowBaseUpgrade = OverflowBaseUpgrade;
 window.OverflowScalingUpgrade = OverflowScalingUpgrade;

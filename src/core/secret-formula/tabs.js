@@ -202,19 +202,27 @@ export const tabs = [
     key: "challenges",
     name: "Challenges",
     hideAt: 2,
-    condition: () =>
-      PlayerProgress.realityUnlocked() ||
-      PlayerProgress.eternityUnlocked() ||
-      PlayerProgress.infinityUnlocked(),
     id: 5,
     hidable: true,
     subtabs: [
+      {
+        key: "simulation",
+        name: "Simulation",
+        symbol: "e",
+        component: "SimulationChallengesTab",
+        id: 0,
+        hidable: true
+      },
       {
         key: "normal",
         name: "Challenges",
         symbol: "Ω",
         component: "NormalChallengesTab",
-        id: 0,
+        condition: () =>
+          PlayerProgress.realityUnlocked() ||
+          PlayerProgress.eternityUnlocked() ||
+          PlayerProgress.infinityUnlocked(),
+        id: 1,
         hidable: true
       },
       {
@@ -223,7 +231,7 @@ export const tabs = [
         symbol: "∞",
         component: "infinity-challenges-tab",
         condition: () => PlayerProgress.realityUnlocked() || PlayerProgress.hasBroken() || Pelle.isDoomed,
-        id: 1,
+        id: 2,
         hidable: true
       },
       {
@@ -235,7 +243,7 @@ export const tabs = [
           PlayerProgress.realityUnlocked() ||
           player.challenge.eternity.unlocked !== 0 ||
           EternityChallenges.all.some(ec => ec.completions > 0),
-        id: 2,
+        id: 3,
         hidable: true
       }
     ],
@@ -510,7 +518,7 @@ export const tabs = [
         name: "Overflow",
         symbol: "ε",
         component: "OverflowTab",
-        id: 0,
+        id: 1,
         hidable: true
       },
       {
@@ -518,7 +526,7 @@ export const tabs = [
         name: "Capacitator",
         symbol: "ε",
         component: "OverflowTab",
-        id: 1,
+        id: 2,
         hidable: true
       }
     ]

@@ -478,7 +478,9 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
   }
 }();
 
-Currency.overflowPoints = new class extends DecimalCurrency {
-  get value() { return player.overflowPoints; }
-  set value(value) { player.overflowPoints = value; }
+Currency.entropy = new class extends NumberCurrency {
+  get value() { return player.entropy; }
+  set value(value) { player.entropy = value; }
+
+  get max() { return player.maxEntropy; }
 }();
